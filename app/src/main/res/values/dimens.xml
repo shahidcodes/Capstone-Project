@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="pad_task_item_row">20dp</dimen>
+</resources>
