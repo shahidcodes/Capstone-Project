@@ -4,6 +4,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Random;
+import java.util.UUID;
+
 @Entity(tableName = "task_table")
 public class Task {
 
@@ -14,6 +17,12 @@ public class Task {
     private String name;
     private String description;
     private String recurrence;
+    private int taskId;
+
+    public Task(){
+        Random random = new Random();
+        taskId = random.nextInt();
+    }
 
 
     @NonNull
@@ -39,5 +48,13 @@ public class Task {
 
     public void setRecurrence(String recurrence) {
         this.recurrence = recurrence;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 }

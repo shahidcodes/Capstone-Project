@@ -17,10 +17,10 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
-import ml.shahidkamal.flatmatestaskreminder.AddTaskActivity;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 import ml.shahidkamal.flatmatestaskreminder.room.TaskViewModel;
+import ml.shahidkamal.flatmatestaskreminder.scheduler.TaskScheduler;
 
 public class FragmentAddTask extends Fragment {
 
@@ -68,6 +68,8 @@ public class FragmentAddTask extends Fragment {
                 task.setName(taskName);
                 task.setDescription(taskDesc);
                 taskViewModel.insert(task);
+                TaskScheduler utils = new TaskScheduler(getContext());
+                utils.scheduleTask(task);
                 Toasty.normal(getActivity(),taskHasBeenAdded, Toast.LENGTH_SHORT ).show();
                 getActivity().finish();
             }

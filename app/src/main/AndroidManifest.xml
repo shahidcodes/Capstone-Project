@@ -22,6 +22,14 @@
             android:name=".AddTaskActivity"
             android:label="@string/title_activity_add_task"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:exported="false"
+            android:name=".scheduler.NotificationService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
