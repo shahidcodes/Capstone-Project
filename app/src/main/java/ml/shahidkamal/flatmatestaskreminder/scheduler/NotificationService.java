@@ -1,7 +1,10 @@
 package ml.shahidkamal.flatmatestaskreminder.scheduler;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -25,14 +28,23 @@ public class NotificationService extends JobService {
     public boolean onStartJob(JobParameters job) {
         Log.d(TAG, "onStartJob");
         try {
-            Task task = (Task) job.getExtras().getSerializable(INTENT_KEY_JOB_OBJECT);
-            String name = task.getName();
-            String desc = task.getDescription();
-            int taskId = task.getTaskId();
+            String name = job.getExtras().getString(Constants.INTENT_KEY_JOB_NAME);
+            String desc = job.getExtras().getString(Constants.INTENT_KEY_JOB_DESC);
+            String recurDay = job.getExtras().getString(Constants.INTENT_KEY_JOB_RECUR_DAY);
+            boolean isRecurring = job.getExtras().getBoolean(Constants.INTENT_KEY_JOB_RECURRING);
+            int taskId = job.getExtras().getInt(Constants.INTENT_KEY_JOB_ID);
 
             Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+            Task task = new Task();
+            task.setRecurring(isRecurring);
+            task.setName(name);
+            task.setDescription(desc);
+            task.setRecurringDay(recurDay);
             intent.putExtra(INTENT_KEY_JOB_OBJECT, task);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                     .setContentTitle(name)
@@ -40,6 +52,9 @@ public class NotificationService extends JobService {
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentIntent(pendingIntent)
                     .setSmallIcon(R.drawable.ic_small_notification)
+                    .setSound(defaultSoundUri)
+                    .setAutoCancel(true)
+                    .setDefaults(Notification.DEFAULT_ALL)
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
             notificationManager.notify(taskId, mBuilder.build());

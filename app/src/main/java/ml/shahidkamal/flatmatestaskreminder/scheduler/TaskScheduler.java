@@ -26,13 +26,17 @@ public class TaskScheduler {
     public void scheduleTask(Task task){
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.INTENT_KEY_JOB_OBJECT, task);
+        bundle.putString(Constants.INTENT_KEY_JOB_NAME, task.getName());
+        bundle.putString(Constants.INTENT_KEY_JOB_DESC, task.getDescription());
+        bundle.putString(Constants.INTENT_KEY_JOB_RECUR_DAY, task.getRecurringDay());
+        bundle.putBoolean(Constants.INTENT_KEY_JOB_RECURRING, task.isRecurring());
+        bundle.putInt(Constants.INTENT_KEY_JOB_ID, task.getTaskId());
 
         Job job = dispatcher.newJobBuilder()
                 .setService(NotificationService.class)
                 .setTag(String.valueOf(task.getTaskId()))
                 .setRecurring(task.isRecurring())
-                .setTrigger(Trigger.executionWindow(0, 60*60))
+                .setTrigger(Trigger.executionWindow(0, 10))
                 .setLifetime(Lifetime.FOREVER)
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .setExtras(bundle)
