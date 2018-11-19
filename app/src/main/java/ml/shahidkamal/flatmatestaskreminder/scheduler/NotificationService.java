@@ -5,28 +5,28 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
+import com.google.firebase.crash.FirebaseCrash;
 
-import ml.shahidkamal.flatmatestaskreminder.Constants;
+import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
+import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.TaskListActivity;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 
-import static ml.shahidkamal.flatmatestaskreminder.Constants.CHANNEL_ID;
-import static ml.shahidkamal.flatmatestaskreminder.Constants.INTENT_KEY_JOB_OBJECT;
+import static ml.shahidkamal.flatmatestaskreminder.utils.Constants.CHANNEL_ID;
+import static ml.shahidkamal.flatmatestaskreminder.utils.Constants.INTENT_KEY_JOB_OBJECT;
 
 public class NotificationService extends JobService {
     private static final String TAG = "NotificationService";
 
     @Override
     public boolean onStartJob(JobParameters job) {
-        Log.d(TAG, "onStartJob");
         try {
             String name = job.getExtras().getString(Constants.INTENT_KEY_JOB_NAME);
             String desc = job.getExtras().getString(Constants.INTENT_KEY_JOB_DESC);
@@ -58,8 +58,14 @@ public class NotificationService extends JobService {
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
             notificationManager.notify(taskId, mBuilder.build());
-        }catch (NullPointerException ex){
+
+            TaskScheduler scheduler = new TaskScheduler(getApplicationContext());
+            scheduler.schedule(taskId, job.getExtras(), 7 * 24 * 60 * 60, true);
+            Analytics.logEvent(Analytics.EVENT_MESSAGE, job.getExtras());
+        }catch (Exception ex){
             Log.e(TAG, "onStartJob: NullPointer", ex);
+            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE NOTIFICATION");
+            FirebaseCrash.report(ex);
         }
         return false;
     }

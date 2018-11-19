@@ -19,7 +19,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Arrays;
 
 import butterknife.BindArray;
@@ -27,7 +28,8 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
-import ml.shahidkamal.flatmatestaskreminder.Constants;
+import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
+import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 import ml.shahidkamal.flatmatestaskreminder.room.TaskViewModel;
@@ -80,7 +82,9 @@ public class FragmentAddTask extends Fragment {
         Intent intent = getActivity().getIntent();
         if(intent != null){
             intentTask = (Task) intent.getSerializableExtra(Constants.INTENT_KEY_JOB_OBJECT);
-            if( intentTask!= null) populateEditData(intentTask);
+            if( intentTask!= null) {
+                populateEditData(intentTask);
+            }
         }
         return view;
     }
@@ -160,6 +164,10 @@ public class FragmentAddTask extends Fragment {
             taskViewModel.delete(intentTask);
             Toasty.normal(getActivity(), taskDeleted, Toast.LENGTH_SHORT).show();
             getActivity().finish();
+        }else {
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "DELETE TASK ITEM NULL INTENT");
+            Analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         }
     }
 

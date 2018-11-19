@@ -1,4 +1,4 @@
-package ml.shahidkamal.flatmatestaskreminder;
+package ml.shahidkamal.flatmatestaskreminder.utils;
 
 public class Constants {
     public static final String INTENT_KEY_JOB_NAME = "TASK_NAME";
