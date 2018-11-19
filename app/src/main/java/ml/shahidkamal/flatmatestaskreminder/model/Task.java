@@ -4,19 +4,18 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.Random;
-import java.util.UUID;
 
 @Entity(tableName = "task_table")
-public class Task {
+public class Task implements Serializable {
 
-//    @PrimaryKey(autoGenerate = true)
-//    public int id;
-    @PrimaryKey
-    @NonNull
     private String name;
     private String description;
-    private String recurrence;
+    private boolean isRecurring;
+    private String recurringDay;
+    @PrimaryKey
+    @NonNull
     private int taskId;
 
     public Task(){
@@ -24,13 +23,11 @@ public class Task {
         taskId = random.nextInt();
     }
 
-
-    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(@NonNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -42,19 +39,28 @@ public class Task {
         this.description = description;
     }
 
-    public String getRecurrence() {
-        return recurrence;
+    public boolean isRecurring() {
+        return isRecurring;
     }
 
-    public void setRecurrence(String recurrence) {
-        this.recurrence = recurrence;
+    public void setRecurring(boolean recurring) {
+        isRecurring = recurring;
     }
 
+    public String getRecurringDay() {
+        return recurringDay;
+    }
+
+    public void setRecurringDay(String recurringDay) {
+        this.recurringDay = recurringDay;
+    }
+
+    @NonNull
     public int getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(@NonNull int taskId) {
         this.taskId = taskId;
     }
 }

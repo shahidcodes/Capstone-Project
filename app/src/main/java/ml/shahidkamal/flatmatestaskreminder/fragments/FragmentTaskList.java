@@ -72,11 +72,6 @@ public class FragmentTaskList extends Fragment {
         rvTaskList.setAdapter(adapterTaskList);
         rvTaskList.addItemDecoration(new DividerItemDecoration(rvTaskList.getContext(), layoutManager.getOrientation()));
         List<Task> dummyTasks = new ArrayList<>();
-        Task task1 = new Task();
-        task1.setName("asdasd");
-        task1.setDescription("Asdasd");
-        dummyTasks.add(task1);
-        adapterTaskList.setTasks(dummyTasks);
         taskViewModel.getAllTasks().observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {

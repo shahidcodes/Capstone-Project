@@ -1,17 +1,23 @@
 package ml.shahidkamal.flatmatestaskreminder.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import ml.shahidkamal.flatmatestaskreminder.AddTaskActivity;
+import ml.shahidkamal.flatmatestaskreminder.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 
@@ -23,19 +29,28 @@ public class AdapterTaskList extends RecyclerView.Adapter<AdapterTaskList.TaskLi
 
     public AdapterTaskList(Context context) {
         inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @NonNull
     @Override
     public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = inflater.inflate(R.layout.item_task_row, null, false);
+        View view = inflater.inflate(R.layout.item_task_row, viewGroup, false);
         return new TaskListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TaskListViewHolder taskListViewHolder, int i) {
-        Task task = tasks.get(i);
+        final Task task = tasks.get(i);
         taskListViewHolder.taskName.setText(task.getName());
+        taskListViewHolder.rootLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AddTaskActivity.class);
+                intent.putExtra(Constants.INTENT_KEY_JOB_OBJECT, task);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -49,6 +64,8 @@ public class AdapterTaskList extends RecyclerView.Adapter<AdapterTaskList.TaskLi
 
         @BindView(R.id.tv_task_name)
         TextView taskName;
+        @BindView(R.id.rv_item_root_layout)
+        LinearLayout rootLayout;
 
         public TaskListViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -14,9 +14,10 @@ import ml.shahidkamal.flatmatestaskreminder.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.TaskListActivity;
 
+import static ml.shahidkamal.flatmatestaskreminder.Constants.CHANNEL_ID;
+
 public class NotificationService extends JobService {
     private static final String TAG = "NotificationService";
-    private static final String CHANNEL_ID = "1";
 
     @Override
     public boolean onStartJob(JobParameters job) {
@@ -29,7 +30,7 @@ public class NotificationService extends JobService {
             Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                     .setContentTitle(name)
                     .setContentText(desc)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -37,7 +38,7 @@ public class NotificationService extends JobService {
                     .setSmallIcon(R.drawable.ic_small_notification)
                     .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
             notificationManager.notify(taskId, mBuilder.build());
         }catch (NullPointerException ex){
             Log.e(TAG, "onStartJob: NullPointer", ex);

@@ -3,12 +3,14 @@ package ml.shahidkamal.flatmatestaskreminder.db;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.List;
 
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 
 public class TaskRepository {
+    private static final String TAG = "TaskRepository";
     private TaskDao mTaskDao;
     private LiveData<List<Task>> mAllTasks;
 
@@ -40,4 +42,47 @@ public class TaskRepository {
             return null;
         }
     }
+
+    public void update(Task task){
+        new updateAsyncTask(mTaskDao).execute(task);
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Task, Void, Void>{
+
+        private TaskDao taskDao;
+
+        public updateAsyncTask(TaskDao taskDao) {
+            this.taskDao = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Task... tasks) {
+            Log.d(TAG, "doInBackground: " + tasks[0].getTaskId());
+            taskDao.update(tasks[0]);
+            return null;
+        }
+    }
+
+
+    public void delete(Task task){
+        new deleteAsyncTask(mTaskDao).execute(task);
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Task, Void, Void>{
+
+        private TaskDao taskDao;
+
+        public deleteAsyncTask(TaskDao taskDao) {
+            this.taskDao = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Task... tasks) {
+            taskDao.delete(tasks[0]);
+            return null;
+        }
+    }
+
 }
+
+

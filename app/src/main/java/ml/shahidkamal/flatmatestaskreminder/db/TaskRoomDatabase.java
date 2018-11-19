@@ -8,11 +8,12 @@ import android.content.Context;
 
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 
-@Database(entities = {Task.class}, version = 1)
+@Database(entities = {Task.class}, version = 3)
 public abstract class TaskRoomDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "TaskRoomDatabase";
     private static volatile TaskRoomDatabase INSTANCE;
+
     public abstract TaskDao taskDao();
 
     public static TaskRoomDatabase getDatabase(final Context context) {
@@ -23,7 +24,8 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             TaskRoomDatabase.class,
                             DB_NAME
-                    ).build();
+                    ).fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }

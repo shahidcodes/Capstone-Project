@@ -8,4 +8,6 @@
     <string name="task_desc_desc">edit text task description</string>
     <string name="task_name_required">Task name can not be empty</string>
     <string name="task_added">Task has been added</string>
+    <string name="desc_add_task_button">add task button</string>
+    <string name="add_task">Add Task</string>
 </resources>

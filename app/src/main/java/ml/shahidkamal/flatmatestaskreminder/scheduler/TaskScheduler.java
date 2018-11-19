@@ -32,13 +32,17 @@ public class TaskScheduler {
 
         Job job = dispatcher.newJobBuilder()
                 .setService(NotificationService.class)
-                .setTag(task.getName())
+                .setTag(String.valueOf(task.getTaskId()))
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(0, 60))
+                .setTrigger(Trigger.executionWindow(0, 60*60))
                 .setLifetime(Lifetime.FOREVER)
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .setExtras(bundle)
                 .build();
         dispatcher.mustSchedule(job);
+    }
+
+    public void cancelSchedule(Task task) {
+        dispatcher.cancel(String.valueOf(task.getTaskId()));
     }
 }
