@@ -10,4 +10,12 @@
     <string name="task_added">Task has been added</string>
     <string name="desc_add_task_button">add task button</string>
     <string name="add_task">Add Task</string>
+    <string name="menu_label_delete_task">DELETE TASK</string>
+    <string name="task_deleted">Task has been deleted</string>
+    <string name="task_updated">Task has been updated</string>
+    <string name="btn_label_update_task">Update Task</string>
+    <string name="cb_text_recurring">Recurring</string>
+    <string name="btn_text_delete_task">DELETE TASK</string>
+    <string name="hint_task_name">Task name</string>
+    <string name="hint_small_task_description">Small task description</string>
 </resources>

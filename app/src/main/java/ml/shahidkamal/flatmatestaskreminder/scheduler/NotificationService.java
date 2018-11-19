@@ -13,8 +13,10 @@ import com.firebase.jobdispatcher.JobService;
 import ml.shahidkamal.flatmatestaskreminder.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.TaskListActivity;
+import ml.shahidkamal.flatmatestaskreminder.model.Task;
 
 import static ml.shahidkamal.flatmatestaskreminder.Constants.CHANNEL_ID;
+import static ml.shahidkamal.flatmatestaskreminder.Constants.INTENT_KEY_JOB_OBJECT;
 
 public class NotificationService extends JobService {
     private static final String TAG = "NotificationService";
@@ -23,11 +25,13 @@ public class NotificationService extends JobService {
     public boolean onStartJob(JobParameters job) {
         Log.d(TAG, "onStartJob");
         try {
-            String name = job.getExtras().getString(Constants.INTENT_KEY_JOB_NAME);
-            String desc = job.getExtras().getString(Constants.INTENT_KEY_JOB_DESC);
-            int taskId = job.getExtras().getInt(Constants.INTENT_KEY_JOB_ID);
+            Task task = (Task) job.getExtras().getSerializable(INTENT_KEY_JOB_OBJECT);
+            String name = task.getName();
+            String desc = task.getDescription();
+            int taskId = task.getTaskId();
 
             Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+            intent.putExtra(INTENT_KEY_JOB_OBJECT, task);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
@@ -36,7 +40,6 @@ public class NotificationService extends JobService {
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentIntent(pendingIntent)
                     .setSmallIcon(R.drawable.ic_small_notification)
-                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
             notificationManager.notify(taskId, mBuilder.build());

@@ -48,11 +48,16 @@ public class FragmentAddTask extends Fragment {
     CheckBox cbRecurring;
     @BindArray(R.array.days_array)
     String[] daysArray;
+    @BindView(R.id.btnDelTask)
+    Button btnDelTask;
     private TaskViewModel taskViewModel;
     @BindString(R.string.task_name_required)
     String taskNameCanNotBeEmpty;
     @BindString(R.string.task_added)
     String taskHasBeenAdded;
+    @BindString(R.string.task_deleted) String taskDeleted;
+    @BindString(R.string.task_updated) String taskUpdated;
+    @BindString(R.string.btn_label_update_task) String btnLabelUpdateTask;
     String selectOption;
     Task intentTask;
 
@@ -86,6 +91,8 @@ public class FragmentAddTask extends Fragment {
         etTaskName.setText(task.getName());
         etTaskDesc.setText(task.getDescription());
         spinnerOpts.setSelection(Arrays.asList(daysArray).indexOf(task.getRecurringDay()));
+        btnDelTask.setVisibility(View.VISIBLE);
+        btnAddTask.setText(btnLabelUpdateTask);
     }
 
     private void handleAction() {
@@ -103,6 +110,13 @@ public class FragmentAddTask extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 selectOption = daysArray[0];
+            }
+        });
+
+        btnDelTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteCurrentTask();
             }
         });
 
@@ -139,6 +153,14 @@ public class FragmentAddTask extends Fragment {
             }
         });
 
+    }
+
+    private void deleteCurrentTask() {
+        if(intentTask!=null){
+            taskViewModel.delete(intentTask);
+            Toasty.normal(getActivity(), taskDeleted, Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+        }
     }
 
     private void showError(String taskNameCanNotBeEmpty) {
