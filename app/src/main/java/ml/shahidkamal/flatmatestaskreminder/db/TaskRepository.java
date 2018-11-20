@@ -2,6 +2,7 @@ package ml.shahidkamal.flatmatestaskreminder.db;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,8 +15,8 @@ public class TaskRepository {
     private TaskDao mTaskDao;
     private LiveData<List<Task>> mAllTasks;
 
-    public TaskRepository(Application application) {
-        TaskRoomDatabase taskRoomDatabase = TaskRoomDatabase.getDatabase(application);
+    public TaskRepository(Context context) {
+        TaskRoomDatabase taskRoomDatabase = TaskRoomDatabase.getDatabase(context);
         mTaskDao = taskRoomDatabase.taskDao();
         mAllTasks= mTaskDao.getAllTasks();
     }

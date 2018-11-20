@@ -1,8 +1,12 @@
 package ml.shahidkamal.flatmatestaskreminder.fragments;
 
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,6 +38,7 @@ import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 import ml.shahidkamal.flatmatestaskreminder.room.TaskViewModel;
 import ml.shahidkamal.flatmatestaskreminder.scheduler.TaskScheduler;
+import ml.shahidkamal.flatmatestaskreminder.widget.TaskWidget;
 
 public class FragmentAddTask extends Fragment {
     private static final String TAG = "FragmentAddTask";
@@ -152,11 +157,26 @@ public class FragmentAddTask extends Fragment {
                     taskViewModel.insert(task);
                 }
                 utils.scheduleTask(task);
+                updateWidgetData(task);
                 Toasty.normal(getActivity(), taskHasBeenAdded, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
 
+    }
+
+    private void updateWidgetData(Task task) {
+        SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.PREF_KEY_TASK_NAME, task.getName());
+        editor.putString(Constants.PREF_KEY_TASK_DESC, task.getDescription());
+        editor.putInt(Constants.PREF_KEY_TASK_ID, task.getTaskId());
+        editor.putBoolean(Constants.PREF_KEY_TASK_RECURRING, task.isRecurring());
+        editor.putString(Constants.PREF_KEY_TASK_DAY, task.getRecurringDay());
+        editor.apply();
+        int[] ids = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(new ComponentName(getContext(), TaskWidget.class));
+        TaskWidget taskWidget = new TaskWidget();
+        taskWidget.onUpdate(getContext(), AppWidgetManager.getInstance(getContext()), ids);
     }
 
     private void deleteCurrentTask() {

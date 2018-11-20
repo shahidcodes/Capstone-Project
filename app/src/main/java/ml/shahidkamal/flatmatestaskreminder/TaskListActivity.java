@@ -6,7 +6,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
 
 import static ml.shahidkamal.flatmatestaskreminder.utils.Constants.CHANNEL_DESC;
@@ -24,6 +29,7 @@ public class TaskListActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("APP_START", "APP STARTED");
         Analytics.logEvent(Analytics.EVENT_MESSAGE, bundle);
+        Fabric.with(this, new Crashlytics());
     }
 
     private void createNotificationChannel() {

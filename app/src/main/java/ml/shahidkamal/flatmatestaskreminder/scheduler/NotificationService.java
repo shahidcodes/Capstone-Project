@@ -9,9 +9,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
-import com.google.firebase.crash.FirebaseCrash;
 
 import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
 import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
@@ -64,8 +64,7 @@ public class NotificationService extends JobService {
             Analytics.logEvent(Analytics.EVENT_MESSAGE, job.getExtras());
         }catch (Exception ex){
             Log.e(TAG, "onStartJob: NullPointer", ex);
-            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE NOTIFICATION");
-            FirebaseCrash.report(ex);
+            Crashlytics.log(Log.ERROR, TAG, "NPE NOTIFICATION");
         }
         return false;
     }
