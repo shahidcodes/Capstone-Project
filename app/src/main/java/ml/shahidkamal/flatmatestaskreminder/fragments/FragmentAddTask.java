@@ -32,12 +32,12 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
-import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
-import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
 import ml.shahidkamal.flatmatestaskreminder.room.TaskViewModel;
 import ml.shahidkamal.flatmatestaskreminder.scheduler.TaskScheduler;
+import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
+import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 import ml.shahidkamal.flatmatestaskreminder.widget.TaskWidget;
 
 public class FragmentAddTask extends Fragment {

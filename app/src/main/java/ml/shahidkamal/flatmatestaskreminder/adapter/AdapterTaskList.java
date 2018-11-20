@@ -15,9 +15,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ml.shahidkamal.flatmatestaskreminder.AddTaskActivity;
-import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
+import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 
 public class AdapterTaskList extends RecyclerView.Adapter<AdapterTaskList.TaskListViewHolder> {
 

@@ -13,11 +13,11 @@ import com.crashlytics.android.Crashlytics;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
-import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
-import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 import ml.shahidkamal.flatmatestaskreminder.R;
 import ml.shahidkamal.flatmatestaskreminder.TaskListActivity;
 import ml.shahidkamal.flatmatestaskreminder.model.Task;
+import ml.shahidkamal.flatmatestaskreminder.utils.Analytics;
+import ml.shahidkamal.flatmatestaskreminder.utils.Constants;
 
 import static ml.shahidkamal.flatmatestaskreminder.utils.Constants.CHANNEL_ID;
 import static ml.shahidkamal.flatmatestaskreminder.utils.Constants.INTENT_KEY_JOB_OBJECT;

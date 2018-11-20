@@ -1,6 +1,5 @@
 package ml.shahidkamal.flatmatestaskreminder.db;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.os.AsyncTask;
