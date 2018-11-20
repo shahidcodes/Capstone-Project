@@ -65,11 +65,13 @@ public class TaskScheduler {
         int dayOfWeek = getDayOfWeek(recurringDay);
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         int diff = Math.abs(dayOfWeek- day);
+        Log.d(TAG, "getStartWindow: diff: " + diff);
         return diff * 3600;
     }
 
     private int getDayOfWeek(String recurringDay) {
-        switch (recurringDay) {
+        Log.d(TAG, "getDayOfWeek: recurringDay: " + recurringDay);
+        switch (recurringDay.toUpperCase()) {
             case "FRIDAY":
                 return Calendar.FRIDAY;
             case "SATURDAY":
