@@ -9,4 +9,6 @@
     <color name="icons">#212121</color>
     <color name="divider">#BDBDBD</color>
     <color name="red">#FFFF0000</color>
+
+    <color name="widget_header_stripe">#FF007BA4</color>
 </resources>

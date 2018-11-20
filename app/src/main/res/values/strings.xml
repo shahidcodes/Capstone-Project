@@ -20,4 +20,15 @@
     <string name="hint_small_task_description">Small task description</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="widget_header_text">Recent Task</string>
+    <string name="repeated_reminder_wt">REAPEATED REMINDER ON</string>
+    <string name="cd_widget_header_text">Widget Header Text</string>
+    <string name="cd_widget_task_name">widget task name</string>
+    <string name="cd_widget_task_description">widget task description</string>
+    <string name="cd_widget_task_recurring_information">widget task recurring information</string>
+    <string name="confirm_clear_reminder_title">Are you sure?</string>
+    <string name="confirm_clear_reminder_message">If you choose Ok then all upcoming reminder will be delete. But you can re enable them by updating the task.</string>
+    <string name="confirm_clear_reminder_pos_btn">Ok</string>
+    <string name="confirm_clear_reminder_neg_btn">Cancel</string>
+    <string name="clear_reminder_success_msg">All reminders has been cleared</string>
 </resources>

@@ -13,32 +13,42 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_widget_header_text"
+            android:gravity="center_horizontal"
+            android:text="@string/widget_header_text"
+            android:background="@color/widget_header_stripe"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/wtv_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:lineSpacingExtra="8sp"
-            android:padding="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#FFF"
+            android:contentDescription="@string/cd_widget_task_name"
+            android:paddingTop="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead.Inverse"
+            android:textStyle="bold"
             tools:text="Task Name" />
 
         <TextView
             android:id="@+id/wtv_task_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:padding="2dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@android:color/white"
+            android:contentDescription="@string/cd_widget_task_description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead.Inverse"
+            android:textSize="14sp"
             tools:text="@string/hint_small_task_description" />
 
         <TextView
             android:id="@+id/wtv_task_recur_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white"
+            android:contentDescription="@string/cd_widget_task_recurring_information"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead.Inverse"
+            android:textSize="14sp"
             tools:text="task recurring day" />
 
     </LinearLayout>

@@ -24,14 +24,16 @@ public class TaskWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.task_widget);
         views.setTextViewText(R.id.wtv_task_name, task.getName());
         views.setTextViewText(R.id.wtv_task_description, task.getDescription());
-        views.setTextViewText(R.id.wtv_task_recur_day, task.getRecurringDay());
+        String recurText = task.getRecurringDay();
+        if(task.isRecurring()) recurText = context.getString(R.string.repeated_reminder_wt) + " " + task.getRecurringDay();
+        views.setTextViewText(R.id.wtv_task_recur_day, recurText);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
     private static Task getTaskFromSharedPref(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         Task task = new Task();
-        task.setName(preferences.getString(Constants.PREF_KEY_TASK_NAME, ""));
+        task.setName(preferences.getString(Constants.PREF_KEY_TASK_NAME, "ADD A TASK FIRST"));
         task.setDescription(preferences.getString(Constants.PREF_KEY_TASK_DESC, ""));
         task.setRecurringDay(preferences.getString(Constants.PREF_KEY_TASK_DAY, ""));
         task.setRecurring(preferences.getBoolean(Constants.PREF_KEY_TASK_RECURRING, false));

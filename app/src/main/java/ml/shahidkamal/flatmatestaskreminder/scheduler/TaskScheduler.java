@@ -92,4 +92,8 @@ public class TaskScheduler {
     public void cancelSchedule(Task task) {
         dispatcher.cancel(String.valueOf(task.getTaskId()));
     }
+
+    public void cancelAllSchedule(){
+        dispatcher.cancelAll();
+    }
 }
