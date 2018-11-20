@@ -31,4 +31,6 @@
     <string name="confirm_clear_reminder_pos_btn">Ok</string>
     <string name="confirm_clear_reminder_neg_btn">Cancel</string>
     <string name="clear_reminder_success_msg">All reminders has been cleared</string>
+    <string name="task_list">Task list</string>
+    <string name="cd_row_item_list">Perticular item in list</string>
 </resources>

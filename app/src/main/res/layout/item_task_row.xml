@@ -14,5 +14,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/pad_task_item_row"
         android:textColor="@color/primary_text"
+        android:contentDescription="@string/cd_row_item_list"
         tools:text="task name" />
 </LinearLayout>
